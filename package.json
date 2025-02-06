@@ -2,7 +2,6 @@
   "name": "pointsapi",
   "version": "1.0.0",
   "main": "app.ts",
-  "type": "module",
   "scripts": {
     "dev": "npx tsx app.ts",
     "proxy": "npx tsx proxy.ts"
