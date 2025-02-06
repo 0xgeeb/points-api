@@ -1,0 +1,26 @@
+{
+  "name": "pointsapi",
+  "version": "1.0.0",
+  "main": "app.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "npx tsx app.ts",
+    "proxy": "npx tsx proxy.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.7",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "graphql": "^16.10.0",
+    "graphql-request": "^7.1.2",
+    "http-proxy-middleware": "^3.0.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3",
+    "viem": "^2.22.10"
+  }
+}
