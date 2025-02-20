@@ -3,7 +3,7 @@ import express, { Request, Response } from "express"
 import { gql, request } from "graphql-request"
 import { createConfig, http } from "wagmi"
 import { formatEther, parseEther, type Chain } from "viem"
-import { getPublicClient, readContract } from "@wagmi/core"
+import { readContract } from "@wagmi/core"
 import vaultABI from './abis/WeethGoldivault.json'
 import quoterABI from "./abis/QuoterV2.json"
 
@@ -121,6 +121,32 @@ const SOLVBTC_ISLANDBALANCES_QUERY = gql`
   }
 `
 
+const RUSD_VAULTHOLDERS_QUERY = gql`
+  query {
+    rusdVaultHolders {
+      address
+      vaultAmt
+    }
+  }
+`
+const RUSD_YTHOLDERS_QUERY = gql`
+  query {
+    rusdYTHolders {
+      address
+      ytAmt
+    }
+  }
+`
+
+const RUSD_VAULTBALANCES_QUERY = gql`
+  query {
+    rusdVaultBalances(id: "1") {
+      balance0
+      balance1
+    }
+  }
+`
+
 const goldskyUrl = process.env.GOLDSKY_URL ?? ''
 
 app.get("/rseth", async (req: Request, res: Response) => {
@@ -160,6 +186,20 @@ app.get("/solvbtc", async (req: Request, res: Response) => {
     islandHolders: islandHoldersResponse?.solvbtcIslandHolders,
     ytHolders: ytResponse?.solvbtcYTHolders,
     islandBalances: islandBalancesResponse?.solvbtcIslandBalances
+  }
+  console.log(jsonResponse)
+  res.json(jsonResponse)
+})
+
+app.get("/rusd", async (req: Request, res: Response) => {
+  console.log('rusd api request received')
+  const vaultHoldersResponse: any = await request(goldskyUrl, RUSD_VAULTHOLDERS_QUERY)
+  const ytResponse: any = await request(goldskyUrl, RUSD_YTHOLDERS_QUERY)
+  const vaultBalancesResponse: any = await request(goldskyUrl, RUSD_VAULTBALANCES_QUERY)
+  const jsonResponse = {
+    vaultHolders: vaultHoldersResponse?.rusdVaultHolders,
+    ytHolders: ytResponse?.rusdYTHolders,
+    vaultBalances: vaultBalancesResponse?.rusdVaultBalances
   }
   console.log(jsonResponse)
   res.json(jsonResponse)
